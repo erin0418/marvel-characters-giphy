@@ -10,7 +10,7 @@ function displayCharacter() {
           url: queryURL,
           method: "GET"
         }).then(function(response) {
-            console.log(response);
+            
         });
 
       }
@@ -20,16 +20,11 @@ function renderButtons() {
     $("#buttons").empty();
 
     for (var i = 0; i < characters.length; i++) {
-
-    var a = $("<button>");
-
-    a.addClass("character-btn");
-         
-    a.attr("data-name", characters[i]);
-
-    a.text(characters[i]);
-
-    $("#buttons").append(a);
+        var a = $("<button>");
+        a.addClass("character-btn");
+        a.attr("data-name", characters[i]);
+        a.text(characters[i]);
+        $("#buttons").append(a);
     }
 }
 
@@ -42,6 +37,20 @@ $("#add-character").on("click", function(event) {
     renderButtons();
 });
 
+$(".gif").on("click", function() {
+    var state = $(this).attr("data-state");
+    if (state == "still"){
+      $(this).attr("src", $(this).attr("data-animate"));
+      $(this).attr("data-state", "animate");
+    }
+    if (state == "animate") {
+      $(this).attr("src", $(this).attr("data-still"));
+      $(this).attr("data-state", "still");
+
+    }
+  });
+
 $(document).on("click", ".movie-btn", displayCharacter);
 
 renderButtons();
+console.log(characters)
