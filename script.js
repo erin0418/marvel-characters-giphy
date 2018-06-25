@@ -1,6 +1,9 @@
 
 var characters = ["Captain America", "Iron Man", "Hawkeye", "Spiderman", "Scarlet Witch", "Star Lord", "Thanos", "Ant-Man", "Thor", "Rocket Raccoon"];
 
+$(document).on("click", "#buttons", displayCharacter);
+
+
 function displayCharacter() {
 
     var character = $(this).attr("data-name");
@@ -10,9 +13,12 @@ function displayCharacter() {
           url: queryURL,
           method: "GET"
         }).then(function(response) {
-            
+            var imageUrl = response.data.image_original_url;
+            var characterImage = $("<img>");
+            characterImage.attr("src", imageUrl);
+            $("#character-gifs").html(characterImage);
         });
-
+        console.log(queryURL)
       }
 
 function renderButtons() {
@@ -30,14 +36,15 @@ function renderButtons() {
 
 $("#add-character").on("click", function(event) {
     event.preventDefault();
-    var character = $("#character-input").val().trim();
-
-    characters.push(character);
-
+    var characterNew = $("#character-input").val();
+    if(!characterNew) {
+        return
+      }
+    characters.push(characterNew);
     renderButtons();
 });
 
-$(".gif").on("click", function() {
+$("#character-gifs").on("click", function() {
     var state = $(this).attr("data-state");
     if (state == "still"){
       $(this).attr("src", $(this).attr("data-animate"));
@@ -49,8 +56,4 @@ $(".gif").on("click", function() {
 
     }
   });
-
-$(document).on("click", ".movie-btn", displayCharacter);
-
 renderButtons();
-console.log(characters)
