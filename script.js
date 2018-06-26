@@ -4,20 +4,18 @@ var characters = ["Captain America", "Iron Man", "Hawkeye", "Spiderman", "Scarle
 
 function displayCharacter() {
     var character = $(this).attr("data-name");
-    var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + character + '&limit=5';
+    var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + character;
 
         $.ajax({
           url: queryURL,
           method: "GET"
         }).then(function(response) {
             // i think i need to add a loop to go through all of the gifs shown
-            var imageUrl = response.data.image_original_url;
+            var imageUrl = response.data.fixed_height_small_still_url;
             var characterImage = $("<img>");
             characterImage.attr("src", imageUrl);
             $("#character-gifs").html(characterImage);
         });
-        console.log(queryURL)
-        console.log(character);
       }
 
 function renderButtons() {
