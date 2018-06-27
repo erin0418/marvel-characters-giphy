@@ -1,6 +1,7 @@
 
 var characters = ["Captain America", "Iron Man", "Hawkeye", "Spiderman", "Scarlet Witch", "Star Lord", "Thanos", "Ant-Man", "Thor", "Rocket Raccoon"];
 
+var status = "still";
 
 function displayCharacter() {
     var character = $(this).attr("data-name");
@@ -10,14 +11,26 @@ function displayCharacter() {
           url: queryURL,
           method: "GET"
         }).then(function(response) {
-            // i think i need to add a loop to go through all of the gifs shown
-            var imageUrl = response.data.fixed_height_small_still_url;
+            if (status == "moving") {
+            var stillImageUrl = response.data.fixed_height_small_still_url;
             var characterImage = $("<img>");
-            characterImage.attr("src", imageUrl);
+            characterImage.attr("src", stillImageUrl);
             $("#character-gifs").html(characterImage);
+            status = "still"
+            console.log(response)
+            }
         });
+        if (status == "still") {
+            ("#character-gifs").on("click", function (){
+                console.log(true)
+                var movingImageUrl = response.data.embeded_url;
+                var characterImage = $("<img>");
+                characterImage.attr("src", movingImageUrl);
+                $("#character-gifs").html(characterImage);
+                status = "moving"
+            })
+        }
       }
-
 function renderButtons() {
 
     $("#buttons").empty();
@@ -30,7 +43,6 @@ function renderButtons() {
         $("#buttons").append(a);
     }
 }
-
 $("#add-character").on("click", function(event) {
     event.preventDefault();
     var characterNew = $("#character-input").val();
@@ -41,18 +53,6 @@ $("#add-character").on("click", function(event) {
     renderButtons();
 });
 
-$("#character-gifs").on("click", function() {
-    var state = $(this).attr("data-state");
-    if (state == "still"){
-      $(this).attr("src", $(this).attr("data-animate"));
-      $(this).attr("data-state", "animate");
-    }
-    if (state == "animate") {
-      $(this).attr("src", $(this).attr("data-still"));
-      $(this).attr("data-state", "still");
-
-    }
-  });
 $(document).on("click", ".character-btn", displayCharacter);
 renderButtons();
 
