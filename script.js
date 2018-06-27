@@ -1,7 +1,7 @@
 
 var characters = ["Captain America", "Iron Man", "Hawkeye", "Spiderman", "Scarlet Witch", "Star Lord", "Thanos", "Ant-Man", "Thor", "Rocket Raccoon"];
 
-var status = "still";
+var status = "moving";
 
 function displayCharacter() {
     var character = $(this).attr("data-name");
