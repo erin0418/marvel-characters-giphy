@@ -1,5 +1,6 @@
 
 var characters = ["Captain America", "Iron Man", "Hawkeye", "Spiderman", "Scarlet Witch", "Star Lord", "Thanos", "Ant-Man", "Thor", "Rocket Raccoon"];
+var status;
 
 function displayCharacter() {
     var character = $(this).attr("data-name");
@@ -19,6 +20,17 @@ function displayCharacter() {
                 characterMovingImage = $("<img>");
                 characterMovingImage.attr("src", movingImage);
                 $("#character-gifs").html(characterMovingImage);
+                status = "moving";
+                if (status == "moving") {
+                    $("#character-gifs").on("click", function (){
+                    var stillImage = response.data.fixed_height_small_still_url;
+                    characterStillImage = $("<img>");
+                    characterStillImage.attr("src", stillImage);
+                    $("#character-gifs").html(characterStillImage);
+                    status = undefined;
+                    })
+                }
+
             })
         });
       }
