@@ -13,6 +13,13 @@ function displayCharacter() {
             var characterImage = $("<img>");
             characterImage.attr("src", stillImageUrl);
             $("#character-gifs").html(characterImage);
+            console.log(response)
+            $("#character-gifs").on("click", function (){
+                var movingImage = response.data.fixed_height_small_url;
+                characterMovingImage = $("<img>");
+                characterMovingImage.attr("src", movingImage);
+                $("#character-gifs").html(characterMovingImage);
+            })
         });
       }
 function renderButtons() {
