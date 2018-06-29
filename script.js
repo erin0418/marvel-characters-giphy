@@ -1,8 +1,6 @@
 
 var characters = ["Captain America", "Iron Man", "Hawkeye", "Spiderman", "Scarlet Witch", "Star Lord", "Thanos", "Ant-Man", "Thor", "Rocket Raccoon"];
 
-var status = "moving";
-
 function displayCharacter() {
     var character = $(this).attr("data-name");
     var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + character;
@@ -11,25 +9,11 @@ function displayCharacter() {
           url: queryURL,
           method: "GET"
         }).then(function(response) {
-            if (status == "moving") {
             var stillImageUrl = response.data.fixed_height_small_still_url;
             var characterImage = $("<img>");
             characterImage.attr("src", stillImageUrl);
             $("#character-gifs").html(characterImage);
-            status = "still"
-            console.log(response)
-            }
         });
-        if (status == "still") {
-            ("#character-gifs").on("click", function (){
-                console.log(true)
-                var movingImageUrl = response.data.embeded_url;
-                var characterImage = $("<img>");
-                characterImage.attr("src", movingImageUrl);
-                $("#character-gifs").html(characterImage);
-                status = "moving"
-            })
-        }
       }
 function renderButtons() {
 
